@@ -1,15 +1,16 @@
 package dk.digitalidentity.hello;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// @RestController combines @Controller w/ @ResponseBody, so that
-// the web requests return data instead of views
 @RestController
 public class HelloController {
 
-	@RequestMapping
-	public String hello(){
-		return "Hello !";
+	@GetMapping(value = "/hello", produces = "application/json")
+	public ResponseEntity<String> checkHealth() {
+		String currentVersion = "1.0.0";
+		return new ResponseEntity<>(currentVersion, HttpStatus.OK);
 	}
 }
