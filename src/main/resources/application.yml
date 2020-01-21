@@ -1,0 +1,22 @@
+zuul:
+  routes:
+    serviceHello:
+      path: /hello
+      url: forward:/
+
+  ratelimit:
+    enabled: true
+    repository: REDIS
+    default-policy-list:
+      - limit: 10
+        refresh-interval: 60
+        type:
+          - http_method
+    policy-list:
+      serviceHello:
+        - limit: 5
+          refresh-interval: 60
+        - type:
+            - url=hello
+            - http_method=get
+  strip-prefix: true
